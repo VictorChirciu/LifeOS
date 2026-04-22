@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link href="/css/output.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/images/yin-yang-brown.png" />
+  </head>
+  <body
+    data-theme="<%= locals.theme || 'stone' %>"
+    data-dark="<%= locals.darkMode ? 'true' : 'false' %>"
+    class="<%= locals.theme ? `theme-${locals.theme}` : 'theme-stone' %> <%= locals.darkMode ? 'dark' : '' %>"
+  >
+    <%- include('partials/navbar') %>
+
+    <div class="container mx-auto px-6 py-10 max-w-5xl">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Notes</h1>
+          <p class="text-gray-500 mt-1 text-sm">
+            Toate notițele tale într-un loc
+          </p>
+        </div>
+        <form action="/notes" method="POST" class="flex gap-2">
+          <input
+            type="text"
+            name="title"
+            placeholder="Titlu notă nouă..."
+            required
+            class="px-4 py-2 border border-gray-200 rounded-xl bg-white text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all w-56"
+          />
+          <button
+            type="submit"
+            class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white text-sm font-medium rounded-xl transition-all"
+          >
+            + Notă nouă
+          </button>
+        </form>
+      </div>
+
+      <% if (notes.length === 0) { %>
+      <div
+        class="bg-white rounded-2xl border border-gray-200 shadow-sm p-16 text-center"
+      >
+        <p class="text-4xl mb-4">📝</p>
+        <p class="text-gray-500 text-sm">
+          Nu ai nicio notiță încă. Creează una!
+        </p>
+      </div>
+      <% } else { %>
+      <div class="grid grid-cols-3 gap-4">
+        <% notes.forEach(note => { let preview = "Notiță goală..."; try { const
+        delta = JSON.parse(note.content); const text = delta.ops.map(op =>
+        typeof op.insert === 'string' ? op.insert : '').join('').trim(); if
+        (text) preview = text.slice(0, 150); } catch {} %>
+        <div
+          class="relative group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all"
+        >
+          <a href="/notes/<%= note._id %>" class="block p-5">
+            <h2
+              class="font-semibold text-gray-800 text-base mb-2 group-hover:text-blue-600 transition-colors truncate"
+            >
+              <%= note.title %>
+            </h2>
+            <p class="text-xs text-gray-400 line-clamp-3 leading-relaxed">
+              <%= preview %>
+            </p>
+            <p class="text-xs text-gray-300 mt-4">
+              <%= new Date(note.updatedAt).toLocaleDateString('ro-RO', { day:
+              'numeric', month: 'long', year: 'numeric' }) %>
+            </p>
+          </a>
+
+          <button
+            class="pin-btn absolute top-3 right-12 opacity-0 group-hover:opacity-100 p-1.5 rounded-lg transition-all <%= note.pinned ? 'bg-gray-400 text-gray-600' : 'bg-gray-200 hover:bg-gray-300 text-gray-50' %>"
+            data-note-id="<%= note._id %>"
+            data-pinned="<%= note.pinned %>"
+            title="<%= note.pinned ? 'Dezafișează' : 'Fixează' %>"
+          >
+            <% if (note.pinned) { %>
+            <img
+              src="/images/pin.png"
+              alt="Pinned"
+              class="h-4 w-4 opacity-90"
+            />
+            <% } else { %>
+            <img
+              src="/images/unpin.png"
+              alt="Unpinned"
+              class="h-4 w-4 opacity-50"
+            />
+            <% } %>
+          </button>
+
+          <button
+            onclick="deleteNote('<%= note._id %>')"
+            class="delete-note-btn absolute top-3 right-3 opacity-0 group-hover:opacity-100 p-1.5 bg-red-200 hover:bg-red-100 text-red-500 rounded-lg transition-all"
+            title="Șterge"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+
+    <div
+      id="deleteModal"
+      class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-sm mx-4">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">
+          Ești sigur că vrei să ștergi această notiță?
+        </h2>
+        <div class="flex gap-4 justify-end">
+          <button
+            onclick="
+              document.getElementById('deleteModal').classList.add('hidden')
+            "
+            class="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-stone-50 transition-all"
+          >
+            Anulează
+          </button>
+          <button
+            id="confirmDeleteBtn"
+            class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded-xl transition-all"
+          >
+            Șterge
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

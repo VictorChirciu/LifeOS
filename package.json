@@ -1,0 +1,54 @@
+{
+  "name": "life_os",
+  "version": "1.0.0",
+  "description": "a personal life management app",
+  "main": "server.ts",
+  "scripts": {
+    "lr": "node scripts/livereload.mjs",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run css:watch\" \"npm run client:watch\" \"npm run lr\" \"nodemon\"",
+    "css:watch": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --watch",
+    "client:watch": "tsc -p tsconfig.client.json --watch",
+    "client:build": "tsc -p tsconfig.client.json",
+    "css:build": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --minify",
+    "build": "npm run css:build && npm run client:build && tsc",
+    "start": "node dist/server.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "Victor Chirciu",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.14.0",
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^17.3.1",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.3.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/connect-livereload": "^0.6.3",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
+    "@types/livereload": "^0.9.5",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^25.5.0",
+    "autoprefixer": "^10.4.27",
+    "concurrently": "^9.1.2",
+    "connect-livereload": "^0.6.1",
+    "cross-env": "^10.1.0",
+    "livereload": "^0.9.3",
+    "nodemon": "^3.1.14",
+    "postcss": "^8.5.8",
+    "prettier-plugin-ejs": "^1.0.3",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

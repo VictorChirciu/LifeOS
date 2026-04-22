@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/output.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/images/yin-yang-gold.png" />
+    <title>Authentication</title>
+  </head>
+  <script type="module" src="/js/main.js"></script>
+  <body class="page-public bg-stone-100">
+    <div
+      class="container mx-auto px-10 pt-10 pb-4 flex flex-col items-center text-center"
+    >
+      <div
+        class="mb-3 p-6 bg-white rounded-3xl shadow-sm border border-gray-100 inline-block"
+      >
+        <h1 class="text-4xl font-bold text-gray-900 tracking-tighter">
+          Autentificare
+        </h1>
+      </div>
+      <form
+        action="/auth"
+        method="POST"
+        class="w-full max-w-sm bg-white rounded-lg shadow-md p-6"
+      >
+        <div class="mb-4">
+          <label for="email" class="block text-gray-700 text-xl font-bold mb-3"
+            >Email</label
+          >
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="email@exemplu.com"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-stone-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 focus:bg-white transition-all"
+            />
+          </div>
+        </div>
+        <div class="mb-6">
+          <label
+            for="password"
+            class="block text-gray-700 text-xl font-bold mb-3"
+            >Parolă</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Parolă"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-stone-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 focus:bg-white transition-all"
+            />
+            <button
+              type="button"
+              class="password-toggle absolute right-3 top-1/2 -translate-y-1/2"
+            >
+              <img src="/images/hidden.png" class="w-5 h-5 opacity-50" />
+            </button>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-all hover:scale-105 shadow-lg shadow-green-200"
+        >
+          Autentificare
+        </button>
+      </form>
+    </div>
+    <div class="container mx-auto mb-8 text-center">
+      <h2>
+        Nu ai cont?
+        <a href="/register" class="text-blue-600 hover:text-blue-800"
+          >Înregistrează-te</a
+        >
+      </h2>
+    </div>
+  </body>
+</html>

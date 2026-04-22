@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link href="/css/output.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/images/yin-yang-blue.png" />
+  </head>
+  <body
+    data-theme="<%= locals.theme || 'stone' %>"
+    data-dark="<%= locals.darkMode ? 'true' : 'false' %>"
+    class="<%= locals.theme ? `theme-${locals.theme}` : 'theme-stone' %> <%= locals.darkMode ? 'dark' : '' %>"
+  >
+    <%- include('partials/navbar') %>
+    <% const monthNames =
+    ["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"];
+    const dayNames = ["Lun","Mar","Mie","Joi","Vin","Sâm","Dum"]; const firstDay
+    = new Date(year, month - 1, 1); const daysInMonth = new Date(year, month,
+    0).getDate(); const prevMonthDays = new Date(year, month - 1, 0).getDate();
+    let startDow = firstDay.getDay(); startDow = startDow === 0 ? 6 : startDow -
+    1; const prevMonth = month === 1 ? 12 : month - 1; const prevYear = month
+    === 1 ? year - 1 : year; const nextMonth = month === 12 ? 1 : month + 1;
+    const nextYear = month === 12 ? year + 1 : year; const today = new Date();
+    const eventMap = {}; events.forEach(e => { const d = new
+    Date(e.date).getDate(); if (!eventMap[d]) eventMap[d] = [];
+    eventMap[d].push(e); }); let cells = []; for (let i = 0; i < startDow; i++)
+    { cells.push({ day: prevMonthDays - startDow + 1 + i, current: false }); }
+    for (let i = 1; i <= daysInMonth; i++) { cells.push({ day: i, current: true
+    }); } while (cells.length % 7 !== 0) { cells.push({ day: cells.length -
+    startDow - daysInMonth + 1, current: false }); } %>
+
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">
+          <%= monthNames[month - 1] %> <%= year %>
+        </h1>
+        <div class="flex items-center gap-2">
+          <a
+            href="/calendar?year=<%= prevYear %>&month=<%= prevMonth %>"
+            class="p-2 rounded-lg hover:bg-stone-200 text-gray-500 hover:text-gray-900 transition-all"
+            >←</a
+          >
+          <a
+            href="/calendar"
+            class="px-3 py-1.5 text-sm rounded-lg border border-gray-200 bg-white hover:bg-stone-50 text-gray-600 transition-all"
+            >Azi</a
+          >
+          <a
+            href="/calendar?year=<%= nextYear %>&month=<%= nextMonth %>"
+            class="p-2 rounded-lg hover:bg-stone-200 text-gray-500 hover:text-gray-900 transition-all"
+            >→</a
+          >
+        </div>
+        <button
+          onclick="openAddModal('')"
+          class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white text-sm font-medium rounded-xl transition-all"
+        >
+          + Eveniment nou
+        </button>
+      </div>
+
+      <div
+        class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+      >
+        <div class="grid grid-cols-7 border-b border-gray-200">
+          <% dayNames.forEach(d => { %>
+          <div
+            class="p-3 text-center text-xs font-semibold text-gray-400 uppercase tracking-wide"
+          >
+            <%= d %>
+          </div>
+          <% }) %>
+        </div>
+
+        <div class="grid grid-cols-7">
+          <% cells.forEach((cell, idx) => { const isToday = cell.current &&
+          today.getDate() === cell.day && today.getMonth() + 1 === month &&
+          today.getFullYear() === year; const cellEvents = cell.current &&
+          eventMap[cell.day] ? eventMap[cell.day] : []; const isLast = idx >=
+          cells.length - 7; const isRight = (idx + 1) % 7 === 0; const cellDate
+          = cell.current ?
+          `${year}-${String(month).padStart(2,'0')}-${String(cell.day).padStart(2,'0')}`
+          : ''; %>
+          <div
+            class="min-h-[130px] p-2 border-gray-200 transition-all hover:bg-stone-50 <%= cell.current ? 'cursor-pointer' : 'bg-gray-50 cursor-default' %> <%= isLast ? '' : 'border-b' %> <%= isRight ? '' : 'border-r' %>"
+            onclick="<%= cell.current ? `openAddModal('${cellDate}')` : '' %>"
+          >
+            <span
+              class="text-sm font-semibold flex items-center justify-center w-6 h-6 rounded-full mb-1 <%= isToday ? 'bg-blue-600 text-white' : cell.current ? 'text-gray-800' : 'text-gray-400' %>"
+            >
+              <%= cell.day %>
+            </span>
+
+            <% cellEvents.forEach(ev => { %>
+            <div
+              class="text-xs rounded px-1.5 py-0.5 mb-1 truncate cursor-pointer relative z-10"
+              data-color="<%= ev.culoarea || '#1D4ED8' %>"
+              data-id="<%= ev._id %>"
+              data-title="<%= ev.title %>"
+              data-desc="<%= ev.description || '' %>"
+              data-date="<%= new Date(ev.date).toISOString().split('T')[0] %>"
+              data-time="<%= ev.time || '' %>"
+              onclick="
+                event.stopPropagation();
+                showEvent(
+                  this.dataset.id,
+                  this.dataset.title,
+                  this.dataset.desc,
+                  this.dataset.date,
+                  this.dataset.time,
+                  this.dataset.color,
+                );
+              "
+            >
+              <span class="font-semibold"><%= ev.title %></span>
+              <% if (ev.time) { %>
+              <span class="opacity-60 font-normal"><%= ev.time %></span>
+              <% } %>
+            </div>
+            <% }) %>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="addModal"
+      class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Eveniment nou</h2>
+        <form action="/calendar" method="POST" class="flex flex-col gap-3">
+          <div class="flex gap-2">
+            <input
+              type="text"
+              name="title"
+              placeholder="Titlu"
+              required
+              class="flex-grow px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
+            />
+            <input
+              type="color"
+              name="culoarea"
+              value="#1D4ED8"
+              title="Alege culoarea"
+              class="w-14 h-[42px] p-2 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-gray-400 hover:shadow-sm transition-all [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-lg"
+            />
+          </div>
+          <input
+            type="date"
+            name="date"
+            required
+            class="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all disabled:bg-stone-50 disabled:text-gray-400"
+          />
+          <input
+            type="time"
+            name="time"
+            class="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
+          />
+          <textarea
+            name="description"
+            placeholder="Descriere (opțional)"
+            rows="2"
+            class="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none transition-all"
+          ></textarea>
+          <div class="flex gap-2 mt-2">
+            <button
+              type="button"
+              onclick="closeAddModal()"
+              class="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-stone-50 transition-all"
+            >
+              Anulează
+            </button>
+            <button
+              type="submit"
+              class="flex-1 px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white text-sm font-medium rounded-xl transition-all"
+            >
+              Salvează
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="viewModal"
+      class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
+        <h2
+          id="viewTitle"
+          contenteditable="true"
+          class="text-lg font-bold text-gray-800 mb-2 focus:outline-none border-b border-transparent focus:border-gray-300"
+        ></h2>
+        <div class="flex gap-3 mb-3">
+          <input
+            id="viewDate"
+            type="date"
+            class="text-xs text-gray-500 border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <input
+            id="viewTime"
+            type="time"
+            class="text-xs text-gray-500 border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <input
+            id="viewColor"
+            type="color"
+            name="color"
+            value="#1D4ED8"
+            class="w-14 h-[28px] p-2 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-gray-400 hover:shadow-sm transition-all [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-lg"
+          />
+        </div>
+        <p
+          id="viewDesc"
+          contenteditable="true"
+          class="text-sm text-gray-600 mb-4 focus:outline-none border-b border-transparent focus:border-gray-300 min-h-[20px]"
+        ></p>
+        <div class="flex gap-2">
+          <button
+            onclick="closeViewModal()"
+            class="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-stone-50 transition-all"
+          >
+            Închide
+          </button>
+          <button
+            id="saveViewBtn"
+            class="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition-all hidden"
+          >
+            Salvează
+          </button>
+          <button
+            id="deleteBtn"
+            class="flex-1 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded-xl transition-all"
+          >
+            Șterge
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

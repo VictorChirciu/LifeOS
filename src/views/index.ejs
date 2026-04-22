@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life OS</title>
+    <link rel="icon" type="image/png" href="/images/yin-yang.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body class="page-public bg-gray-100">
+    <script>
+      (function () {
+        localStorage.removeItem("theme");
+        localStorage.setItem("dark-mode", "false");
+        localStorage.removeItem("theme-flat");
+      })();
+    </script>
+    <div class="container mx-auto p-8 flex flex-col items-center text-center">
+      <div
+        class="mb-3 p-6 bg-white rounded-3xl shadow-sm border border-gray-100 inline-block"
+      >
+        <h1
+          id="clock"
+          class="text-8xl font-['Bree+Serif'] font-black text-gray-900 tracking-tighter"
+        >
+          00:00:00
+        </h1>
+      </div>
+      <div
+        class="mb-8 p-3 bg-white rounded-2xl shadow-sm border border-gray-100 inline-block"
+      >
+        <h3
+          id="date"
+          class="text-4xl font-['Bree+Serif'] font-black text-gray-900 tracking-tighter"
+        >
+          00/00/0000
+        </h3>
+      </div>
+      <div class="w-full max-w-38">
+        <h1 class="text-5xl font-extrabold text-blue-600 mb-4 tracking-tight">
+          Bun venit în Life OS
+        </h1>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Viața ta, organizată. Sarcini, obiceiuri și obiective —
+          <span class="font-semibold text-gray-800"
+            >totul într-un singur loc.</span
+          >
+        </p>
+        <a href="/auth">
+          <button
+            class="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-all hover:scale-105 shadow-lg shadow-blue-200"
+          >
+            Începe acum
+          </button></a
+        >
+      </div>
+    </div>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1009 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   LIFEOS — GLOBAL STYLES
+   1. Animations & Transitions
+   2. Base Theme Variables (:root)
+   3. Light Themes (stone, snow, zinc, sand, mint)
+   4. Theme Application (body[class*="theme-"])
+   5. Dark Mode Base
+   6. Dark Mode per Theme
+   7. Dark Mode Application
+   8. Public Pages (index, auth, register)
+   9. Quill Editor
+   ============================================================ */
+
+/* ============================================================
+   1. ANIMATIONS & TRANSITIONS
+   ============================================================ */
+
+body {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#logo {
+  transition: transform 0.5s ease-in-out;
+  transform: rotate(0deg);
+}
+
+.no-transition * {
+  transition: none !important;
+}
+
+/* ============================================================
+   2. BASE THEME VARIABLES
+   ============================================================ */
+
+:root {
+  --bg: #f5f5f4;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-light: #eff6ff;
+  --accent-text: #1d4ed8;
+  --btn-neutral: #1f2937;
+  --btn-neutral-hover: #111827;
+  --input-bg: #f9fafb;
+  --input-focus: #3b82f6;
+  --danger: #ef4444;
+  --danger-light: #fef2f2;
+  --danger-text: #dc2626;
+  --success: #10b981;
+  --success-light: #ecfdf5;
+  --success-text: #059669;
+}
+
+/* ============================================================
+   3. LIGHT THEMES
+   ============================================================ */
+
+body.theme-stone {
+  --bg: #f5f5f4;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-light: #eff6ff;
+  --accent-text: #1d4ed8;
+  --btn-neutral: #1f2937;
+  --btn-neutral-hover: #111827;
+  --input-bg: #f9fafb;
+  --input-focus: #3b82f6;
+}
+
+body.theme-snow {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-light: #eff6ff;
+  --accent-text: #2563eb;
+  --btn-neutral: #1e293b;
+  --btn-neutral-hover: #0f172a;
+  --input-bg: #f8fafc;
+  --input-focus: #3b82f6;
+}
+
+body.theme-zinc {
+  --bg: #e4e4e7;
+  --card: #fafafa;
+  --border: #d4d4d8;
+  --border-hover: #a1a1aa;
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
+  --accent: #3f3f46;
+  --accent-hover: #27272a;
+  --accent-light: #f4f4f5;
+  --accent-text: #3f3f46;
+  --btn-neutral: #27272a;
+  --btn-neutral-hover: #18181b;
+  --input-bg: #f4f4f5;
+  --input-focus: #71717a;
+}
+
+body.theme-sand {
+  --bg: #f5f0e8;
+  --card: #fdfaf4;
+  --border: #e7dfd0;
+  --border-hover: #d6c9b4;
+  --text-primary: #292524;
+  --text-secondary: #78716c;
+  --text-muted: #a8a29e;
+  --accent: #92400e;
+  --accent-hover: #78350f;
+  --accent-light: #fef3c7;
+  --accent-text: #92400e;
+  --btn-neutral: #44403c;
+  --btn-neutral-hover: #292524;
+  --input-bg: #faf7f0;
+  --input-focus: #d97706;
+}
+
+body.theme-mint {
+  --bg: #ecfdf5;
+  --card: #f0fdf4;
+  --border: #bbf7d0;
+  --border-hover: #86efac;
+  --text-primary: #14532d;
+  --text-secondary: #166534;
+  --text-muted: #4ade80;
+  --accent: #16a34a;
+  --accent-hover: #15803d;
+  --accent-light: #dcfce7;
+  --accent-text: #16a34a;
+  --btn-neutral: #14532d;
+  --btn-neutral-hover: #052e16;
+  --input-bg: #f0fdf4;
+  --input-focus: #22c55e;
+}
+
+/* ============================================================
+   4. THEME APPLICATION
+   ============================================================ */
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+body.theme-flat {
+  background-color: var(--card) !important;
+}
+
+/* Background */
+body[class*="theme-"] .bg-white {
+  background-color: var(--card) !important;
+  transition: background-color 0.3s ease;
+}
+body[class*="theme-"] .bg-stone-50 {
+  background-color: var(--input-bg) !important;
+}
+body[class*="theme-"] .bg-gray-50 {
+  background-color: var(--input-bg) !important;
+}
+body[class*="theme-"] .bg-gray-100 {
+  background-color: var(--input-bg) !important;
+}
+body[class*="theme-"] .bg-mauve-100 {
+  background-color: var(--bg) !important;
+}
+
+/* Borders */
+body[class*="theme-"] .border-gray-100,
+body[class*="theme-"] .border-gray-200 {
+  border-color: var(--border) !important;
+}
+body[class*="theme-"] .hover\:border-gray-300:hover {
+  border-color: var(--border-hover) !important;
+}
+body:is(.theme-zinc, .theme-sand, .theme-mint) .border-blue-200 {
+  border-color: var(--border) !important;
+}
+
+/* Text */
+body[class*="theme-"] .text-gray-900,
+body[class*="theme-"] .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+body[class*="theme-"]:not(.theme-stone) .text-gray-700 {
+  color: var(--accent) !important;
+}
+body[class*="theme-"] .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+body[class*="theme-"] .text-gray-400,
+body[class*="theme-"] .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+body[class*="theme-"] .text-gray-300 {
+  color: var(--text-secondary) !important;
+  font-weight: bold;
+}
+body[class*="theme-"] .hover\:text-white:hover {
+  color: #ffffff !important;
+}
+
+/* Accent */
+body[class*="theme-"] .bg-blue-600 {
+  background-color: var(--accent) !important;
+}
+body[class*="theme-"] .hover\:bg-blue-700:hover {
+  background-color: var(--accent-hover) !important;
+}
+body[class*="theme-"] .bg-blue-100 {
+  background-color: var(--accent-light) !important;
+}
+body[class*="theme-"] .bg-blue-50 {
+  background-color: var(--accent-light) !important;
+}
+body[class*="theme-"] .hover\:bg-blue-500:hover {
+  background-color: var(--input-focus) !important;
+}
+body[class*="theme-"] .text-blue-600,
+body[class*="theme-"] .text-blue-700,
+body[class*="theme-"] .text-blue-800 {
+  color: var(--accent-text) !important;
+}
+body[class*="theme-"] .bg-blue-600.text-white {
+  background-color: var(--accent) !important;
+}
+
+/* Neutral buttons */
+body[class*="theme-"] .bg-gray-800,
+body[class*="theme-"]:not(.theme-stone) .bg-teal-400 {
+  background-color: var(--btn-neutral) !important;
+}
+body[class*="theme-"] .hover\:bg-gray-900:hover,
+body[class*="theme-"]:not(.theme-stone) .hover\:bg-teal-500:hover {
+  background-color: var(--btn-neutral-hover) !important;
+}
+
+/* Inputs */
+body[class*="theme-"] input,
+body[class*="theme-"] textarea,
+body[class*="theme-"] select {
+  background-color: var(--input-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+body[class*="theme-"] input:focus,
+body[class*="theme-"] textarea:focus {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus) 20%, transparent) !important;
+}
+body[class*="theme-"] input::placeholder,
+body[class*="theme-"] textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Navbar */
+body[class*="theme-"]:not(.theme-stone, .theme-zinc)
+  .bg-stone-100.text-gray-900 {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+}
+body[class*="theme-"]:not(.theme-stone, .theme-zinc)
+  .hover\:bg-stone-100:hover {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+}
+body.theme-zinc .bg-stone-100.text-gray-900 {
+  background-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+body.theme-zinc .hover\:bg-stone-100:hover {
+  background-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+body[class*="theme-"] .hover\:bg-stone-200:hover {
+  background-color: var(--border) !important;
+}
+
+/* User menu button */
+body[class*="theme-"]:not(.theme-stone) #userMenuBtn {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+  transition: all 0.2s ease;
+}
+body.theme-zinc #userMenuBtn:hover {
+  background-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+body[class*="theme-"]:not(.theme-stone, .theme-zinc) #userMenuBtn:hover {
+  background-color: var(--border-hover) !important;
+}
+
+/* Hover cards */
+body[class*="theme-"]:not(.theme-stone) .hover\:bg-gray-50:hover,
+body[class*="theme-"]:not(.theme-stone) .hover\:bg-stone-50:hover {
+  background-color: var(--accent-light) !important;
+}
+
+/* Calendar inactive cells */
+body[class*="theme-"]:not(.theme-stone) .cursor-default {
+  background-color: var(--accent-light) !important;
+}
+
+/* Note title focus */
+body[class*="theme-"]:not(.theme-stone) #note-title:focus {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus) 20%, transparent) !important;
+}
+
+/* Notes buttons */
+body[class*="theme-"] .pin-btn:hover {
+  scale: 0.95;
+}
+body[class*="theme-"] .pin-btn:active {
+  scale: 0.9;
+}
+body[class*="theme-"] .delete-note-btn:hover {
+  scale: 0.95;
+}
+body[class*="theme-"] .delete-note-btn:active {
+  scale: 0.9;
+}
+
+/* Shadows */
+body[class*="theme-"] .shadow-sm {
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--text-primary) 8%, transparent) !important;
+}
+
+/* Scrollbar */
+body[class*="theme-"] ::-webkit-scrollbar {
+  width: 6px;
+}
+body[class*="theme-"] ::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+body[class*="theme-"] ::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 3px;
+}
+
+/* Progress bars per theme */
+body:is(.theme-stone) #dayProgress,
+body:is(.theme-stone) #progress-bar {
+  background: linear-gradient(to right, #0a2a88, #59cde9) !important;
+}
+body:is(.theme-snow) #dayProgress,
+body:is(.theme-snow) #progress-bar {
+  background: linear-gradient(to right, #92fe9d, #00c9ff) !important;
+}
+body:is(.theme-zinc) #dayProgress,
+body:is(.theme-zinc) #progress-bar {
+  background: linear-gradient(to right, #2c3e50, #bdc3c7) !important;
+}
+body:is(.theme-sand) #dayProgress,
+body:is(.theme-sand) #progress-bar {
+  background: linear-gradient(to right, #ffc500, #c21500) !important;
+}
+body:is(.theme-mint) #dayProgress,
+body:is(.theme-mint) #progress-bar {
+  background: linear-gradient(to right, #00c996, #003d4d) !important;
+}
+
+/* ============================================================
+   5. DARK MODE BASE VARIABLES
+   ============================================================ */
+
+body.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --border: #334155;
+  --border-hover: #475569;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-light: #1e3a5f;
+  --accent-text: #60a5fa;
+  --btn-neutral: #334155;
+  --btn-neutral-hover: #475569;
+  --input-bg: #1e293b;
+  --input-focus: #3b82f6;
+  --danger: #ef4444;
+  --danger-light: #1f1315;
+  --danger-text: #f87171;
+  --success: #10b981;
+  --success-light: #052e16;
+  --success-text: #4ade80;
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   6. DARK MODE PER THEME
+   ============================================================ */
+
+body.theme-snow.dark {
+  --bg: #0b1220;
+  --card: #111827;
+  --border: #1f2937;
+  --border-hover: #374151;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --accent: #60a5fa;
+  --accent-hover: #3b82f6;
+  --accent-light: #1e3a8a33;
+  --accent-text: #93c5fd;
+  --btn-neutral: #1f2937;
+  --btn-neutral-hover: #374151;
+  --input-bg: #111827;
+  --input-focus: #3b82f6;
+}
+
+body.theme-zinc.dark {
+  --bg: #09090b;
+  --card: #18181b;
+  --border: #27272a;
+  --border-hover: #3f3f46;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #a1a1aa;
+  --accent-hover: #d4d4d8;
+  --accent-light: #27272a;
+  --accent-text: #e4e4e7;
+  --btn-neutral: #27272a;
+  --btn-neutral-hover: #3f3f46;
+  --input-bg: #18181b;
+  --input-focus: #a1a1aa;
+}
+
+body.theme-sand.dark {
+  --bg: #1c1917;
+  --card: #292524;
+  --border: #44403c;
+  --border-hover: #57534e;
+  --text-primary: #fafaf9;
+  --text-secondary: #a8a29e;
+  --text-muted: #78716c;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-light: #78350f33;
+  --accent-text: #fbbf24;
+  --btn-neutral: #44403c;
+  --btn-neutral-hover: #57534e;
+  --input-bg: #292524;
+  --input-focus: #f59e0b;
+}
+
+body.theme-mint.dark {
+  --bg: #022c22;
+  --card: #064e3b;
+  --border: #065f46;
+  --border-hover: #047857;
+  --text-primary: #ecfdf5;
+  --text-secondary: #6ee7b7;
+  --text-muted: #34d399;
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-light: #065f4633;
+  --accent-text: #4ade80;
+  --btn-neutral: #065f46;
+  --btn-neutral-hover: #047857;
+  --input-bg: #064e3b;
+  --input-focus: #22c55e;
+}
+
+/* ============================================================
+   7. DARK MODE APPLICATION
+   ============================================================ */
+
+/* Background */
+body.dark .bg-white {
+  background-color: var(--card) !important;
+}
+body.dark .bg-stone-100,
+body.dark .bg-mauve-100,
+body.dark .bg-stone-50,
+body.dark .bg-gray-50,
+body.dark .bg-gray-100 {
+  background-color: var(--bg) !important;
+}
+body.dark #logo {
+  transform: rotate(180deg);
+}
+
+/* Borders */
+body.dark .border-gray-100,
+body.dark .border-gray-200 {
+  border-color: var(--border) !important;
+}
+body.dark .hover\:border-gray-300:hover {
+  border-color: var(--border-hover) !important;
+}
+body.dark .h-px {
+  background-color: var(--border) !important;
+}
+body.dark:is(.theme-zinc, .theme-sand, .theme-mint) .border-blue-200 {
+  border-color: var(--text-primary) !important;
+}
+
+/* Text */
+body.dark .text-gray-900,
+body.dark .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+body.dark .text-gray-700,
+body.dark .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+body.dark .text-gray-500,
+body.dark .text-gray-400,
+body.dark .text-gray-300 {
+  color: var(--text-muted) !important;
+}
+
+/* Accent */
+body.dark .bg-blue-600 {
+  background-color: var(--accent) !important;
+}
+body.dark .hover\:bg-blue-700:hover {
+  background-color: var(--accent-hover) !important;
+}
+body.dark .hover\:bg-blue-500:hover {
+  background-color: var(--accent) !important;
+}
+body.dark .bg-blue-100,
+body.dark .bg-blue-50 {
+  background-color: var(--accent-light) !important;
+}
+body.dark .text-blue-600,
+body.dark .text-blue-700,
+body.dark .text-blue-800 {
+  color: var(--accent-text) !important;
+}
+
+/* Neutral buttons */
+body.dark .bg-teal-400,
+body.dark .bg-gray-800 {
+  background-color: var(--btn-neutral) !important;
+}
+body.dark .hover\:bg-teal-500:hover,
+body.dark .hover\:bg-gray-900:hover {
+  background-color: var(--btn-neutral-hover) !important;
+}
+
+/* Inputs */
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background-color: var(--input-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+body.dark input:focus,
+body.dark textarea:focus {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus) 20%, transparent) !important;
+}
+
+/* Note title */
+body.dark #note-title:hover {
+  border-color: var(--border-hover) !important;
+  background-color: var(--card);
+}
+body.dark #note-title:focus {
+  border-color: var(--input-focus) !important;
+  background-color: var(--card);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus) 20%, transparent) !important;
+}
+body.dark:is(.theme-mint) #note-title:focus {
+  border-color: var(--bg) !important;
+  background-color: var(--card);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus) 20%, transparent) !important;
+}
+
+/* Navbar */
+body.dark .bg-stone-100.text-gray-900 {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+}
+body.dark:is(.theme-stone) .hover\:bg-stone-100:hover {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+}
+body.dark .hover\:bg-stone-100:hover,
+body.dark .hover\:bg-stone-50:hover,
+body.dark .hover\:bg-gray-50:hover {
+  background-color: var(--border) !important;
+}
+body.dark .hover\:bg-stone-200:hover {
+  background-color: var(--border-hover) !important;
+}
+body.dark .password-toggle {
+  filter: invert(1);
+}
+
+/* Mint dark navbar overrides */
+body.dark:is(.theme-mint) .bg-stone-100.text-gray-900 {
+  background-color: var(--bg) !important;
+  color: var(--accent-text) !important;
+}
+body.dark:is(.theme-mint) .hover\:bg-stone-100:hover,
+body.dark:is(.theme-mint) .hover\:bg-stone-50:hover,
+body.dark:is(.theme-mint) .hover\:bg-gray-50:hover {
+  background-color: var(--bg) !important;
+  color: var(--accent-text) !important;
+}
+body.dark:is(.theme-mint) #userMenuBtn {
+  background-color: var(--bg) !important;
+  color: var(--accent-text) !important;
+}
+body.dark:is(.theme-zinc) #userMenuBtn:hover {
+  background-color: var(--bg) !important;
+  color: var(--accent-text) !important;
+}
+
+/* Danger */
+body.dark .bg-red-50,
+body.dark .bg-red-200 {
+  background-color: var(--danger-light) !important;
+}
+body.dark .text-red-500,
+body.dark .text-red-600 {
+  color: var(--danger-text) !important;
+}
+body.dark .hover\:bg-red-50:hover {
+  background-color: var(--danger-light) !important;
+}
+body.dark .hover\:bg-red-100:hover {
+  background-color: var(--danger) !important;
+  color: var(--danger-light) !important;
+  transition: all 0.2s ease;
+}
+body.dark .hover\:bg-red-500:hover {
+  background-color: var(--danger) !important;
+}
+body.dark .hover\:text-red-500:hover {
+  color: var(--danger-text) !important;
+}
+
+/* Success */
+body.dark .bg-emerald-50,
+body.dark .bg-green-50 {
+  background-color: var(--success-light) !important;
+}
+body.dark .hover\:bg-emerald-500:hover {
+  background-color: var(--success) !important;
+}
+
+/* Calendar inactive cells */
+body.dark:is(.theme-stone) .cursor-default {
+  background-color: var(--border) !important;
+}
+body.dark:is(.theme-mint) .cursor-default {
+  background-color: var(--bg) !important;
+}
+
+/* Shadows */
+body.dark .shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+body.dark .shadow-lg {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Misc */
+body.dark .bg-black\/50,
+body.dark .backdrop-blur-sm {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+body.dark .hover\:text-white:hover {
+  color: #ffffff !important;
+}
+body.dark .border-emerald-600 {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Scrollbar */
+body.dark ::-webkit-scrollbar {
+  width: 6px;
+}
+body.dark ::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+body.dark ::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+}
+
+/* Pin buttons */
+body.dark .pin-btn {
+  background-color: var(--border);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+body.dark .pin-btn:hover {
+  background-color: var(--border-hover);
+  color: var(--text-primary);
+  scale: 0.95;
+}
+body.dark .pin-btn:active {
+  scale: 0.9;
+}
+body.dark .pin-btn.pinned {
+  background-color: var(--border-hover);
+  color: var(--accent-text);
+}
+body.dark .pin-btn.pinned:hover {
+  background-color: var(--border);
+  color: var(--card);
+}
+body.dark .delete-note-btn:hover {
+  scale: 0.95;
+}
+body.dark .delete-note-btn:active {
+  scale: 0.9;
+}
+
+/* Progress bars dark per theme */
+body.dark:is(.theme-stone) #dayProgress,
+body.dark:is(.theme-stone) #progress-bar {
+  background: linear-gradient(to right, #004e92, #000428) !important;
+}
+body.dark:is(.theme-snow) #dayProgress,
+body.dark:is(.theme-snow) #progress-bar {
+  background: linear-gradient(
+    to left,
+    #a8eb12,
+    #00bf72,
+    #008793,
+    #004d7a,
+    #051937
+  ) !important;
+}
+body.dark:is(.theme-zinc) #dayProgress,
+body.dark:is(.theme-zinc) #progress-bar {
+  background: linear-gradient(to right, #29323c, #485563) !important;
+}
+body.dark:is(.theme-sand) #dayProgress,
+body.dark:is(.theme-sand) #progress-bar {
+  background: linear-gradient(to right, #a83279, #d38312) !important;
+}
+body.dark:is(.theme-mint) #dayProgress,
+body.dark:is(.theme-mint) #progress-bar {
+  background: linear-gradient(to left, #237a57, #093028) !important;
+}
+
+/* ============================================================
+   8. PUBLIC PAGES (index, auth, register)
+      Эти страницы НЕ используют темы — базовые стили только
+   ============================================================ */
+
+body.page-public.bg-gray-100 {
+  background-color: #f3f4f6 !important;
+  color: #111827 !important;
+}
+
+body.page-public.bg-stone-100 {
+  background-color: #f5f5f4 !important;
+}
+
+body.page-public.bg-slate-100 {
+  background-color: #f1f5f9 !important;
+}
+
+body.page-public .bg-white {
+  background-color: #ffffff !important;
+}
+
+body.page-public .text-gray-400,
+body.page-public .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+body.page-public .text-gray-600 {
+  color: #4b5563 !important;
+}
+
+body.page-public .text-gray-700 {
+  color: #374151 !important;
+}
+
+body.page-public .text-gray-800 {
+  color: #1f2937 !important;
+}
+
+body.page-public .text-gray-900 {
+  color: #111827 !important;
+}
+
+body.page-public .text-blue-600 {
+  color: #2563eb !important;
+}
+
+body.page-public .bg-blue-600 {
+  background-color: #2563eb !important;
+}
+
+body.page-public .bg-blue-600.text-white {
+  background-color: #2563eb !important;
+}
+
+body.page-public .hover\:bg-blue-700:hover {
+  background-color: #1d4ed8 !important;
+}
+
+body.page-public .border-gray-200 {
+  border-color: #e5e7eb !important;
+}
+
+body.page-public input,
+body.page-public textarea {
+  background-color: #f9fafb !important;
+  border-color: #e5e7eb !important;
+  color: #111827 !important;
+}
+
+body.page-public input:focus,
+body.page-public textarea:focus {
+  color: #111827 !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+body.page-public input::placeholder,
+body.page-public textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* ============================================================
+   9. QUILL EDITOR
+   ============================================================ */
+
+#editor-wrapper {
+  border: 1px solid var(--border) !important;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease;
+}
+
+.ql-toolbar.ql-snow {
+  background-color: var(--input-bg);
+  border-bottom: 1px solid var(--border) !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  transition: background-color 0.3s ease;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+}
+
+.ql-editor {
+  background-color: var(--card);
+  color: var(--text-primary);
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.8;
+  padding: 24px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.ql-editor.ql-blank::before {
+  color: var(--text-muted) !important;
+  font-style: italic;
+}
+
+/* Dark mode Quill text */
+body.dark .ql-editor,
+body.dark .ql-editor h1,
+body.dark .ql-editor h2,
+body.dark .ql-editor h3,
+body.dark .ql-editor h4,
+body.dark .ql-editor h5,
+body.dark .ql-editor h6,
+body.dark .ql-editor p,
+body.dark .ql-editor li {
+  color: #f1f5f9 !important;
+}
+
+/* Toolbar icons */
+.ql-snow .ql-stroke {
+  stroke: var(--text-secondary) !important;
+  transition: stroke 0.2s ease;
+}
+.ql-snow .ql-fill {
+  fill: var(--text-secondary) !important;
+  transition: fill 0.2s ease;
+}
+.ql-snow .ql-picker {
+  color: var(--text-secondary) !important;
+}
+
+.ql-snow .ql-picker-options {
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.ql-snow .ql-picker-item {
+  color: var(--text-primary) !important;
+}
+.ql-snow .ql-picker-item:hover {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke {
+  stroke: var(--accent) !important;
+}
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill {
+  fill: var(--accent) !important;
+}
+.ql-snow.ql-toolbar button:hover,
+.ql-snow.ql-toolbar button.ql-active {
+  background-color: var(--accent-light) !important;
+  border-radius: 6px;
+}
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active {
+  color: var(--accent-text) !important;
+}
+
+.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+  color: var(--text-secondary) !important;
+  border-radius: 6px;
+}
+
+/* Editor content elements */
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  color: var(--text-primary);
+}
+
+.ql-editor blockquote {
+  border-left: 4px solid var(--border-hover) !important;
+  color: var(--text-muted) !important;
+  background-color: var(--input-bg);
+  padding: 8px 16px;
+  border-radius: 0 8px 8px 0;
+}
+.ql-editor pre,
+.ql-editor code {
+  background-color: var(--input-bg) !important;
+  color: var(--accent-text) !important;
+  border-radius: 6px;
+}
+.ql-editor a {
+  color: var(--accent-text) !important;
+}
+.ql-editor ol li,
+.ql-editor ul li {
+  color: var(--text-primary);
+}
+.ql-editor ul li::before {
+  color: var(--accent) !important;
+}
