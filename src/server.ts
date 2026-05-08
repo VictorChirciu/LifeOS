@@ -23,7 +23,7 @@ app.use(
         styleSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
         styleSrcElem: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
         imgSrc: ["'self'", "data:", "blob:"],
-        connectSrc: ["'self'"],
+        connectSrc: ["'self'", "cdn.jsdelivr.net"],
       },
     },
   }),
