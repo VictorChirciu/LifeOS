@@ -10,7 +10,7 @@
     "client:watch": "tsc -p tsconfig.client.json --watch",
     "client:build": "tsc -p tsconfig.client.json",
     "css:build": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --minify",
-    "build": "npm run css:build && npm run client:build && tsc",
+    "build": "npm run css:build && npm run client:build && tsc && cp -r src/views dist/views && cp -r src/public dist/public",
     "start": "node dist/server.js"
   },
   "engines": {
