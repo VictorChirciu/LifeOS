@@ -12,7 +12,20 @@ import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 
 const app = express();
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrcAttr: ["'unsafe-inline'"], // ← asta rezolvă eroarea ta
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        connectSrc: ["'self'"],
+      },
+    },
+  }),
+);
 await connectDatabase();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
